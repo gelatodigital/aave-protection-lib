@@ -26,3 +26,17 @@ export interface ERC20Currency {
   symbol: string;
   decimals: number;
 }
+
+export interface Addresses {
+  Gelato: string;
+  AaveServices: string;
+  RefinanceAction: string;
+  LendingPool: string;
+  WETH: string;
+  WMatic: string;
+  AAVE: string;
+  DAI: string;
+  USDC: string;
+  USDT: string;
+  WBTC: string;
+}

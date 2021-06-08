@@ -2,8 +2,7 @@ import { BigNumber } from "ethers";
 import { AaveServices } from "../contracts/types/AaveServices";
 import { RefinanceTask, TaskState } from "../types";
 import { get, set } from "local-storage";
-import config from "config";
-
+import { blockNumber } from "../constants";
 export const Submitted = "STask";
 export const Executed = "ETask";
 export const Cancelled = "CTask";
@@ -68,7 +67,6 @@ export const getTasks = (state: string): { [id: string]: RefinanceTask } => {
 };
 
 const getTaskByState = async (aaveServices: AaveServices, user: string) => {
-  const blockNumber = config.get("BlockNumber") as number;
   const userSubmittedTasks = await aaveServices.queryFilter(
     aaveServices.filters.LogTaskSubmitted(null, null, user),
     blockNumber
