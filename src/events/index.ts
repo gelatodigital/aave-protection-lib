@@ -13,22 +13,19 @@ export const init = async (aaveServices: AaveServices, user: string) => {
 
   // subcribe to events.
 
-  aaveServices.on(
-    aaveServices.filters.LogExecSuccess(null, user),
-    (id) => {
-      const executedTaskDico = JSON.parse(get(Executed)) as {
-        [id: string]: RefinanceTask;
-      };
-      const submittedTaskDico = JSON.parse(get(Submitted)) as {
-        [id: string]: RefinanceTask;
-      };
-      executedTaskDico[id.toString()] = submittedTaskDico[id.toString()];
-      executedTaskDico[id.toString()].state = TaskState.Executed;
-      delete submittedTaskDico[id.toString()];
-      set(Submitted, JSON.stringify(submittedTaskDico));
-      set(Executed, JSON.stringify(executedTaskDico));
-    }
-  );
+  aaveServices.on(aaveServices.filters.LogExecSuccess(null, user), (id) => {
+    const executedTaskDico = JSON.parse(get(Executed)) as {
+      [id: string]: RefinanceTask;
+    };
+    const submittedTaskDico = JSON.parse(get(Submitted)) as {
+      [id: string]: RefinanceTask;
+    };
+    executedTaskDico[id.toString()] = submittedTaskDico[id.toString()];
+    executedTaskDico[id.toString()].state = TaskState.Executed;
+    delete submittedTaskDico[id.toString()];
+    set(Submitted, JSON.stringify(submittedTaskDico));
+    set(Executed, JSON.stringify(executedTaskDico));
+  });
 
   aaveServices.on(
     aaveServices.filters.LogTaskCancelled(null, user),

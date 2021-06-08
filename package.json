@@ -1,5 +1,5 @@
 {
-  "name": "aave-protection-lib",
+  "name": "@gelatonetwork/aave-protection-lib",
   "version": "0.1.0",
   "description": "Aave Automated protection library for submitting and reading task.",
   "main": "index.js",
