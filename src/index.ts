@@ -1,6 +1,6 @@
 import { BigNumber, ethers } from "ethers";
-import { addresses } from "./types/addresses";
-import { getAaveServices } from "./types/contracts";
+import { addresses } from "./constants";
+import { getAaveServices } from "./instances/contracts";
 
 import { TaskType } from "./types";
 
@@ -34,7 +34,7 @@ export const submitRefinance = async (
   );
   getAaveServices(provider).submitTask(
     TaskType.Refinance,
-    addresses.RefinanceAction,
+    addresses(provider.network.chainId).RefinanceAction,
     data
   );
 };
