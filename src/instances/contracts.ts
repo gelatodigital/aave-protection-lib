@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import { AaveServices__factory } from "../contracts/types/factories/AaveServices__factory";
 import { AaveServices } from "../contracts/types/AaveServices";
-import { addresses } from "../constants/addresses";
+import { addresses } from "../constants";
 import { Web3Provider } from "@ethersproject/providers";
 import { LendingPool } from "../contracts/types/LendingPool";
 import { LendingPool__factory } from "../contracts/types/factories/LendingPool__factory";

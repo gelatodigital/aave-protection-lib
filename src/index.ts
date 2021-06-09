@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from "ethers";
-import { addresses } from "./constants/addresses";
+import { addresses } from "./constants";
 import { getAaveServices } from "./instances/contracts";
 
 import { TaskType } from "./types";
