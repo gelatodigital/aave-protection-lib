@@ -34,7 +34,8 @@
   "homepage": "https://github.com/gelatodigital/aave-protection-lib#readme",
   "dependencies": {
     "ethers": "5.2.0",
-    "local-storage": "2.0.0"
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "2.0.2",

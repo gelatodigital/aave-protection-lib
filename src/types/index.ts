@@ -1,8 +1,8 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { BytesLike } from "@ethersproject/bytes";
 
-export enum TaskState {
-  CheckPending,
+export enum ProtectionStatus {
+  Submitted,
   Executed,
   Cancelled,
 }
@@ -11,20 +11,19 @@ export enum TaskType {
   Refinance = 0,
 }
 
-export interface RefinanceTask {
-  state: TaskState;
+export interface Protection {
+  id: BytesLike;
+  taskID: BigNumber;
+  state: ProtectionStatus;
   taskHash: BytesLike;
   taskType: TaskType;
   owner: string;
-  id: BigNumber;
-  payload: BytesLike;
-}
-
-export interface ERC20Currency {
-  address: string;
-  name: string;
-  symbol: string;
-  decimals: number;
+  collateralToken: string;
+  debtToken: string;
+  rateMode: BigNumber;
+  wantedHealthFactor: BigNumber;
+  minimumHealthFactor: BigNumber;
+  executor: string;
 }
 
 export interface Addresses {
@@ -32,11 +31,4 @@ export interface Addresses {
   AaveServices: string;
   RefinanceAction: string;
   LendingPool: string;
-  WETH: string;
-  WMatic: string;
-  AAVE: string;
-  DAI: string;
-  USDC: string;
-  USDT: string;
-  WBTC: string;
 }
