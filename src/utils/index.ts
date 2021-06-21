@@ -1,10 +1,10 @@
-import { utils, constants, BigNumber, BytesLike } from "ethers";
+import { utils, constants, BigNumber } from "ethers";
 
 export const isProtectionOK = (
   colToken: string,
   debtToken: string,
   rateMode: BigNumber
-): Boolean => {
+): boolean => {
   return (
     utils.isAddress(colToken) &&
     utils.isAddress(debtToken) &&
@@ -19,7 +19,7 @@ export const encodeProtection = (
   wantedHealthFactor: BigNumber,
   minimumHealthFactor: BigNumber,
   owner: string
-) : string => {
+): string => {
   return new utils.AbiCoder().encode(
     ["address", "address", "uint256", "uint256", "uint256", "address"],
     [
@@ -31,4 +31,4 @@ export const encodeProtection = (
       owner,
     ]
   );
-}
+};

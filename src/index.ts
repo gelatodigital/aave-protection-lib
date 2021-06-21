@@ -17,8 +17,7 @@ export const submitProtection = async (
   wantedHealthFactor: BigNumber,
   minimumHealthFactor: BigNumber
 ): Promise<void> => {
-  if (!isProtectionOK(colToken, debtToken, rateMode))
-    return;
+  if (!isProtectionOK(colToken, debtToken, rateMode)) return;
   getAaveServices(provider).submitTask(
     TaskType.Refinance,
     addresses(provider.network.chainId).RefinanceAction,
@@ -42,8 +41,7 @@ export const cancelProtection = async (
   wantedHealthFactor: BigNumber,
   minimumHealthFactor: BigNumber
 ): Promise<void> => {
-  if (!isProtectionOK(colToken, debtToken, rateMode))
-    return;
+  if (!isProtectionOK(colToken, debtToken, rateMode)) return;
   getAaveServices(provider).cancelTask(
     id,
     addresses(provider.network.chainId).RefinanceAction,
