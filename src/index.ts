@@ -7,6 +7,7 @@ import {
   getExecutedProtectionByOwner,
 } from "./query/protections";
 import { Protection, TaskType } from "./types";
+import { isProtectionOK, encodeProtection } from "./utils";
 
 export const submitProtection = async (
   provider: ethers.providers.Web3Provider,
@@ -16,29 +17,19 @@ export const submitProtection = async (
   wantedHealthFactor: BigNumber,
   minimumHealthFactor: BigNumber
 ): Promise<void> => {
-  if (
-    !(
-      ethers.utils.isAddress(colToken) &&
-      ethers.utils.isAddress(debtToken) &&
-      (rateMode === ethers.constants.One || rateMode === ethers.constants.Two)
-    )
-  )
+  if (!isProtectionOK(colToken, debtToken, rateMode))
     return;
-  const data = new ethers.utils.AbiCoder().encode(
-    ["address", "address", "uint256", "uint256", "uint256", "address"],
-    [
+  getAaveServices(provider).submitTask(
+    TaskType.Refinance,
+    addresses(provider.network.chainId).RefinanceAction,
+    encodeProtection(
       colToken,
       debtToken,
       rateMode,
       wantedHealthFactor,
       minimumHealthFactor,
-      await provider.getSigner().getAddress(),
-    ]
-  );
-  getAaveServices(provider).submitTask(
-    TaskType.Refinance,
-    addresses(provider.network.chainId).RefinanceAction,
-    data
+      await provider.getSigner().getAddress()
+    )
   );
 };
 
@@ -51,29 +42,19 @@ export const cancelProtection = async (
   wantedHealthFactor: BigNumber,
   minimumHealthFactor: BigNumber
 ): Promise<void> => {
-  if (
-    !(
-      ethers.utils.isAddress(colToken) &&
-      ethers.utils.isAddress(debtToken) &&
-      (rateMode === ethers.constants.One || rateMode === ethers.constants.Two)
-    )
-  )
+  if (!isProtectionOK(colToken, debtToken, rateMode))
     return;
-  const data = new ethers.utils.AbiCoder().encode(
-    ["address", "address", "uint256", "uint256", "uint256", "address"],
-    [
+  getAaveServices(provider).cancelTask(
+    id,
+    addresses(provider.network.chainId).RefinanceAction,
+    encodeProtection(
       colToken,
       debtToken,
       rateMode,
       wantedHealthFactor,
       minimumHealthFactor,
-      await provider.getSigner().getAddress(),
-    ]
-  );
-  getAaveServices(provider).cancelTask(
-    id,
-    addresses(provider.network.chainId).RefinanceAction,
-    data
+      await provider.getSigner().getAddress()
+    )
   );
 };
 
