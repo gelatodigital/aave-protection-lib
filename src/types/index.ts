@@ -13,7 +13,6 @@ export enum TaskType {
 
 export interface Protection {
   id: BytesLike;
-  taskID: BigNumber;
   state: ProtectionStatus;
   taskHash: BytesLike;
   taskType: TaskType;
@@ -23,6 +22,14 @@ export interface Protection {
   rateMode: BigNumber;
   wantedHealthFactor: BigNumber;
   minimumHealthFactor: BigNumber;
+  submittedTxHash: BytesLike;
+  executedTxHash: BytesLike;
+  cancelledTxHash: BytesLike;
+  createdAt: BigNumber;
+  updatedAt: BigNumber;
+  createdAtBlock: BigNumber;
+  updatedAtBlock: BigNumber;
+  updatedAtBlockHash: BytesLike;
   executor: string;
 }
 
