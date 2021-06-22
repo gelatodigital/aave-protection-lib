@@ -13,7 +13,7 @@ export enum TaskType {
 
 export interface Protection {
   id: BytesLike;
-  state: ProtectionStatus;
+  status: ProtectionStatus;
   taskHash: BytesLike;
   taskType: TaskType;
   owner: string;
