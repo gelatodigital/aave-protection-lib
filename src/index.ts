@@ -19,8 +19,8 @@ export const submitProtection = async (
 ): Promise<void> => {
   if (!isProtectionOK(colToken, debtToken, rateMode)) return;
   getAaveServices(provider).submitTask(
-    TaskType.Refinance,
-    addresses(provider.network.chainId).RefinanceAction,
+    TaskType.Protection,
+    addresses(provider.network.chainId).ProtectionAction,
     encodeProtection(
       colToken,
       debtToken,
@@ -44,7 +44,7 @@ export const cancelProtection = async (
   if (!isProtectionOK(colToken, debtToken, rateMode)) return;
   getAaveServices(provider).cancelTask(
     id,
-    addresses(provider.network.chainId).RefinanceAction,
+    addresses(provider.network.chainId).ProtectionAction,
     encodeProtection(
       colToken,
       debtToken,

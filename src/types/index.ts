@@ -8,7 +8,7 @@ export enum ProtectionStatus {
 }
 
 export enum TaskType {
-  Refinance = 0,
+  Protection = 0,
 }
 
 export interface Protection {
@@ -36,6 +36,6 @@ export interface Protection {
 export interface Addresses {
   Gelato: string;
   AaveServices: string;
-  RefinanceAction: string;
+  ProtectionAction: string;
   LendingPool: string;
 }
