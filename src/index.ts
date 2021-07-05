@@ -15,7 +15,8 @@ export const submitProtection = async (
   debtToken: string,
   rateMode: BigNumber,
   wantedHealthFactor: BigNumber,
-  minimumHealthFactor: BigNumber
+  minimumHealthFactor: BigNumber,
+  isPermanent: boolean
 ): Promise<void> => {
   if (!isProtectionOK(colToken, debtToken, rateMode)) return;
   getAaveServices(provider).submitTask(
@@ -28,22 +29,33 @@ export const submitProtection = async (
       wantedHealthFactor,
       minimumHealthFactor,
       await provider.getSigner().getAddress()
-    )
+    ),
+    isPermanent
   );
 };
 
 export const cancelProtection = async (
   provider: ethers.providers.Web3Provider,
-  id: BigNumber,
+  taskType: BigNumber
+): Promise<void> => {
+  getAaveServices(provider).cancelTask(taskType);
+};
+
+export const updateProtection = async (
+  provider: ethers.providers.Web3Provider,
+  taskType: BigNumber,
   colToken: string,
   debtToken: string,
   rateMode: BigNumber,
   wantedHealthFactor: BigNumber,
-  minimumHealthFactor: BigNumber
+  minimumHealthFactor: BigNumber,
+  isPermanent: boolean
 ): Promise<void> => {
   if (!isProtectionOK(colToken, debtToken, rateMode)) return;
-  getAaveServices(provider).cancelTask(
-    id,
+  const aaveServices = getAaveServices(provider);
+  const user = await provider.getSigner().getAddress();
+  aaveServices.updateTask(
+    taskType,
     addresses(provider.network.chainId).ProtectionAction,
     encodeProtection(
       colToken,
@@ -51,8 +63,9 @@ export const cancelProtection = async (
       rateMode,
       wantedHealthFactor,
       minimumHealthFactor,
-      await provider.getSigner().getAddress()
-    )
+      user
+    ),
+    isPermanent
   );
 };
 

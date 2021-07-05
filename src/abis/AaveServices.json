@@ -1,341 +1,330 @@
-{
-  "_format": "hh-sol-artifact-1",
-  "contractName": "AaveServices",
-  "sourceName": "contracts/services/aave/AaveServices.sol",
-  "abi": [
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_gelato",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "executor",
-          "type": "address"
-        }
-      ],
-      "name": "LogExecSuccess",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "bytes32",
-          "name": "taskHash",
-          "type": "bytes32"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        }
-      ],
-      "name": "LogTaskCancelled",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "bytes32",
-          "name": "taskHash",
-          "type": "bytes32"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "bytes",
-          "name": "payload",
-          "type": "bytes"
-        }
-      ],
-      "name": "LogTaskStored",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "bytes32",
-          "name": "taskHash",
-          "type": "bytes32"
-        },
-        {
-          "indexed": false,
-          "internalType": "enum TaskType",
-          "name": "taskType",
-          "type": "uint8"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "bytes",
-          "name": "payload",
-          "type": "bytes"
-        }
-      ],
-      "name": "LogTaskSubmitted",
-      "type": "event"
-    },
-    {
-      "inputs": [],
-      "name": "GELATO",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_id",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_aaveAction",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes",
-          "name": "_taskData",
-          "type": "bytes"
-        }
-      ],
-      "name": "cancelTask",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_id",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_aaveAction",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes",
-          "name": "_data",
-          "type": "bytes"
-        },
-        {
-          "internalType": "bytes",
-          "name": "_offChainData",
-          "type": "bytes"
-        }
-      ],
-      "name": "exec",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_id",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_aaveAction",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes",
-          "name": "_payload",
-          "type": "bytes"
-        }
-      ],
-      "name": "hashTask",
-      "outputs": [
-        {
-          "internalType": "bytes32",
-          "name": "",
-          "type": "bytes32"
-        }
-      ],
-      "stateMutability": "pure",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_owner",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "_taskHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "isTaskSubmitted",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "enum TaskType",
-          "name": "_taskType",
-          "type": "uint8"
-        },
-        {
-          "internalType": "address",
-          "name": "_aaveAction",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes",
-          "name": "_taskData",
-          "type": "bytes"
-        }
-      ],
-      "name": "submitTask",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "taskId",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "_taskHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "taskOwner",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_owner",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "_taskHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "verifyTask",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ],
-  "bytecode": "0x60a060405234801561001057600080fd5b50604051610c01380380610c0183398101604081905261002f91610044565b60601b6001600160601b031916608052610072565b600060208284031215610055578081fd5b81516001600160a01b038116811461006b578182fd5b9392505050565b60805160601c610b6a610097600039600081816101db01526103d60152610b6a6000f3fe608060405234801561001057600080fd5b50600436106100a35760003560e01c80639451f86611610076578063babdadd41161005b578063babdadd414610134578063eff557a714610154578063fa7f52ea1461015c576100a3565b80639451f8661461010e578063ac3bb67614610121576100a3565b806305e992dd146100a85780630918523d146100bd5780633322b23d146100e65780638e0b4658146100fb575b600080fd5b6100bb6100b63660046107e4565b61016f565b005b6100d06100cb3660046106b6565b610186565b6040516100dd9190610915565b60405180910390f35b6100ee610199565b6040516100dd9190610920565b6100ee6101093660046107e4565b61019f565b6100bb61011c3660046106df565b6101d5565b6100bb61012f366004610783565b61039e565b61014761014236600461076b565b6103b6565b6040516100dd9190610901565b6101476103d4565b6100d061016a3660046106b6565b6103f8565b82828261017e8333848461041f565b505050505050565b600061019283836103f8565b9392505050565b60015490565b60008383836040516020016101b693929190610a61565b6040516020818303038152906040528051906020012090509392505050565b848484847f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316331461022a5760405162461bcd60e51b8152600401610221906109a7565b60405180910390fd5b6102368385848461041f565b6000633f47158d60e01b8787604051602401610253929190610929565b604051602081830303815290604052907bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19166020820180517bffffffffffffffffffffffffffffffffffffffffffffffffffffffff83818316178352505050509050600080896001600160a01b0316836040516102cd9190610834565b6000604051808303816000865af19150503d806000811461030a576040519150601f19603f3d011682016040523d82523d6000602084013e61030f565b606091505b5091509150816103585760408051808201909152601281527f4161766553657276696365732e657865633a000000000000000000000000000060208201526103589082906104ba565b50506040513291506001600160a01b0386169085907f873a7486912e1fe47702cc83f15697a26f5f23adc6d4ba2fbca205078165d15b90600090a4505050505050505050565b8282826103ad33848484610566565b50505050505050565b6000818152602081905260409020546001600160a01b03165b919050565b7f000000000000000000000000000000000000000000000000000000000000000081565b6000610403826103b6565b6001600160a01b0316836001600160a01b031614905092915050565b600061042c85848461019f565b905061043884826103f8565b6104545760405162461bcd60e51b815260040161022190610a04565b60008181526020819052604080822080547fffffffffffffffffffffffff0000000000000000000000000000000000000000169055518691339184917fb35ecf5a054e6b2a665c9e5273af2b69890199cfd07482a418fc329706adfdad91a45050505050565b602082516104c89190610afe565b6004141561055557602082015162461bcd60e51b7fffffffff000000000000000000000000000000000000000000000000000000008216141561054457604483019250818360405160200161051e929190610850565b60408051601f198184030181529082905262461bcd60e51b825261022191600401610994565b8160405160200161051e919061087f565b8060405160200161051e91906108c0565b600060016000815461057790610ab9565b9190508190559050600061058e600154858561019f565b6000818152602081905260409081902080547fffffffffffffffffffffffff0000000000000000000000000000000000000000166001600160a01b038a169081179091556001549151929350909183907f3c018290435484fab9c84490e1051ac6db711383b745142ddc35ccbf9e7fcd1c9061060d908a908990610957565b60405180910390a450949350505050565b80356001600160a01b03811681146103cf57600080fd5b600082601f830112610645578081fd5b813567ffffffffffffffff8082111561066057610660610b1e565b6040516020601f19601f850116820101818110838211171561068457610684610b1e565b60405282815284830160200186101561069b578384fd5b82602086016020830137918201602001929092529392505050565b600080604083850312156106c8578182fd5b6106d18361061e565b946020939093013593505050565b600080600080600060a086880312156106f6578081fd5b6106ff8661061e565b9450602086013593506107146040870161061e565b9250606086013567ffffffffffffffff80821115610730578283fd5b61073c89838a01610635565b93506080880135915080821115610751578283fd5b5061075e88828901610635565b9150509295509295909350565b60006020828403121561077c578081fd5b5035919050565b600080600060608486031215610797578283fd5b8335600181106107a5578384fd5b92506107b36020850161061e565b9150604084013567ffffffffffffffff8111156107ce578182fd5b6107da86828701610635565b9150509250925092565b6000806000606084860312156107f8578283fd5b833592506107b36020850161061e565b60008151808452610820816020860160208601610a89565b601f01601f19169290920160200192915050565b60008251610846818460208701610a89565b9190910192915050565b60008351610862818460208801610a89565b835190830190610876818360208801610a89565b01949350505050565b60008251610891818460208701610a89565b7f4e6f4572726f7253656c6563746f720000000000000000000000000000000000920191825250600f01919050565b600082516108d2818460208701610a89565b7f556e657870656374656452657475726e64617461000000000000000000000000920191825250601401919050565b6001600160a01b0391909116815260200190565b901515815260200190565b90815260200190565b60006040825261093c6040830185610808565b828103602084015261094e8185610808565b95945050505050565b60006001841061097557634e487b7160e01b81526021600452602481fd5b8382526040602083015261098c6040830184610808565b949350505050565b6000602082526101926020830184610808565b6020808252602c908201527f4153696d706c65536572766963655374616e646172643a206d73672e73656e6460408201527f657220213d2067656c61746f0000000000000000000000000000000000000000606082015260800190565b60208082526024908201527f415461736b53746f726167652e5f72656d6f76655461736b3a20217461736b4f60408201527f776e657200000000000000000000000000000000000000000000000000000000606082015260800190565b60008482526001600160a01b03841660208301526060604083015261094e6060830184610808565b60005b83811015610aa4578181015183820152602001610a8c565b83811115610ab3576000848401525b50505050565b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff821415610af757634e487b7160e01b81526011600452602481fd5b5060010190565b600082610b1957634e487b7160e01b81526012600452602481fd5b500690565b634e487b7160e01b600052604160045260246000fdfea2646970667358221220ebb2d0fcbe1d7be8adb186e3eefc2f4e6f31a6fea319ed5adf12ac249b118a5a64736f6c63430008000033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100a35760003560e01c80639451f86611610076578063babdadd41161005b578063babdadd414610134578063eff557a714610154578063fa7f52ea1461015c576100a3565b80639451f8661461010e578063ac3bb67614610121576100a3565b806305e992dd146100a85780630918523d146100bd5780633322b23d146100e65780638e0b4658146100fb575b600080fd5b6100bb6100b63660046107e4565b61016f565b005b6100d06100cb3660046106b6565b610186565b6040516100dd9190610915565b60405180910390f35b6100ee610199565b6040516100dd9190610920565b6100ee6101093660046107e4565b61019f565b6100bb61011c3660046106df565b6101d5565b6100bb61012f366004610783565b61039e565b61014761014236600461076b565b6103b6565b6040516100dd9190610901565b6101476103d4565b6100d061016a3660046106b6565b6103f8565b82828261017e8333848461041f565b505050505050565b600061019283836103f8565b9392505050565b60015490565b60008383836040516020016101b693929190610a61565b6040516020818303038152906040528051906020012090509392505050565b848484847f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316331461022a5760405162461bcd60e51b8152600401610221906109a7565b60405180910390fd5b6102368385848461041f565b6000633f47158d60e01b8787604051602401610253929190610929565b604051602081830303815290604052907bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19166020820180517bffffffffffffffffffffffffffffffffffffffffffffffffffffffff83818316178352505050509050600080896001600160a01b0316836040516102cd9190610834565b6000604051808303816000865af19150503d806000811461030a576040519150601f19603f3d011682016040523d82523d6000602084013e61030f565b606091505b5091509150816103585760408051808201909152601281527f4161766553657276696365732e657865633a000000000000000000000000000060208201526103589082906104ba565b50506040513291506001600160a01b0386169085907f873a7486912e1fe47702cc83f15697a26f5f23adc6d4ba2fbca205078165d15b90600090a4505050505050505050565b8282826103ad33848484610566565b50505050505050565b6000818152602081905260409020546001600160a01b03165b919050565b7f000000000000000000000000000000000000000000000000000000000000000081565b6000610403826103b6565b6001600160a01b0316836001600160a01b031614905092915050565b600061042c85848461019f565b905061043884826103f8565b6104545760405162461bcd60e51b815260040161022190610a04565b60008181526020819052604080822080547fffffffffffffffffffffffff0000000000000000000000000000000000000000169055518691339184917fb35ecf5a054e6b2a665c9e5273af2b69890199cfd07482a418fc329706adfdad91a45050505050565b602082516104c89190610afe565b6004141561055557602082015162461bcd60e51b7fffffffff000000000000000000000000000000000000000000000000000000008216141561054457604483019250818360405160200161051e929190610850565b60408051601f198184030181529082905262461bcd60e51b825261022191600401610994565b8160405160200161051e919061087f565b8060405160200161051e91906108c0565b600060016000815461057790610ab9565b9190508190559050600061058e600154858561019f565b6000818152602081905260409081902080547fffffffffffffffffffffffff0000000000000000000000000000000000000000166001600160a01b038a169081179091556001549151929350909183907f3c018290435484fab9c84490e1051ac6db711383b745142ddc35ccbf9e7fcd1c9061060d908a908990610957565b60405180910390a450949350505050565b80356001600160a01b03811681146103cf57600080fd5b600082601f830112610645578081fd5b813567ffffffffffffffff8082111561066057610660610b1e565b6040516020601f19601f850116820101818110838211171561068457610684610b1e565b60405282815284830160200186101561069b578384fd5b82602086016020830137918201602001929092529392505050565b600080604083850312156106c8578182fd5b6106d18361061e565b946020939093013593505050565b600080600080600060a086880312156106f6578081fd5b6106ff8661061e565b9450602086013593506107146040870161061e565b9250606086013567ffffffffffffffff80821115610730578283fd5b61073c89838a01610635565b93506080880135915080821115610751578283fd5b5061075e88828901610635565b9150509295509295909350565b60006020828403121561077c578081fd5b5035919050565b600080600060608486031215610797578283fd5b8335600181106107a5578384fd5b92506107b36020850161061e565b9150604084013567ffffffffffffffff8111156107ce578182fd5b6107da86828701610635565b9150509250925092565b6000806000606084860312156107f8578283fd5b833592506107b36020850161061e565b60008151808452610820816020860160208601610a89565b601f01601f19169290920160200192915050565b60008251610846818460208701610a89565b9190910192915050565b60008351610862818460208801610a89565b835190830190610876818360208801610a89565b01949350505050565b60008251610891818460208701610a89565b7f4e6f4572726f7253656c6563746f720000000000000000000000000000000000920191825250600f01919050565b600082516108d2818460208701610a89565b7f556e657870656374656452657475726e64617461000000000000000000000000920191825250601401919050565b6001600160a01b0391909116815260200190565b901515815260200190565b90815260200190565b60006040825261093c6040830185610808565b828103602084015261094e8185610808565b95945050505050565b60006001841061097557634e487b7160e01b81526021600452602481fd5b8382526040602083015261098c6040830184610808565b949350505050565b6000602082526101926020830184610808565b6020808252602c908201527f4153696d706c65536572766963655374616e646172643a206d73672e73656e6460408201527f657220213d2067656c61746f0000000000000000000000000000000000000000606082015260800190565b60208082526024908201527f415461736b53746f726167652e5f72656d6f76655461736b3a20217461736b4f60408201527f776e657200000000000000000000000000000000000000000000000000000000606082015260800190565b60008482526001600160a01b03841660208301526060604083015261094e6060830184610808565b60005b83811015610aa4578181015183820152602001610a8c565b83811115610ab3576000848401525b50505050565b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff821415610af757634e487b7160e01b81526011600452602481fd5b5060010190565b600082610b1957634e487b7160e01b81526012600452602481fd5b500690565b634e487b7160e01b600052604160045260246000fdfea2646970667358221220ebb2d0fcbe1d7be8adb186e3eefc2f4e6f31a6fea319ed5adf12ac249b118a5a64736f6c63430008000033",
-  "linkReferences": {},
-  "deployedLinkReferences": {}
-}
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_gelato",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "taskHash",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "executor",
+        "type": "address"
+      }
+    ],
+    "name": "LogExecSuccess",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "taskHash",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "LogTaskCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "taskHash",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum TaskType",
+        "name": "taskType",
+        "type": "uint8"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "payload",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isPermanent",
+        "type": "bool"
+      }
+    ],
+    "name": "LogTaskSubmitted",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "GELATO",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum TaskType",
+        "name": "_taskType",
+        "type": "uint8"
+      }
+    ],
+    "name": "cancelTask",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "enum TaskType",
+        "name": "_taskType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "_aaveAction",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_offChainData",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bool",
+        "name": "_isPermanent",
+        "type": "bool"
+      }
+    ],
+    "name": "exec",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_aaveAction",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_payload",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bool",
+        "name": "_isPermanent",
+        "type": "bool"
+      }
+    ],
+    "name": "hashTask",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_taskHash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "enum TaskType",
+        "name": "_taskType",
+        "type": "uint8"
+      }
+    ],
+    "name": "isTaskSubmitted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_taskHash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "enum TaskType",
+        "name": "_taskType",
+        "type": "uint8"
+      }
+    ],
+    "name": "isUserTask",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum TaskType",
+        "name": "_taskType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "_aaveAction",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_taskData",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bool",
+        "name": "_isPermanent",
+        "type": "bool"
+      }
+    ],
+    "name": "submitTask",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "enum TaskType",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "name": "taskByUser",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum TaskType",
+        "name": "_taskType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "_aaveAction",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bool",
+        "name": "_isPermanent",
+        "type": "bool"
+      }
+    ],
+    "name": "updateTask",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

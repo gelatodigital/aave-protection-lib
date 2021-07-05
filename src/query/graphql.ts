@@ -5,7 +5,6 @@ export const GET_ALL_CANCELLED_PROTECTION_BY_OWNER = gql`
     protections(where: { owner: $owner, status: cancelled }) {
       id
       status
-      taskHash
       taskType
       owner
       collateralToken
@@ -22,6 +21,7 @@ export const GET_ALL_CANCELLED_PROTECTION_BY_OWNER = gql`
       updatedAtBlock
       updatedAtBlockHash
       executor
+      isPermanent
     }
   }
 `;
@@ -31,7 +31,6 @@ export const GET_ALL_SUBMITTED_PROTECTION_BY_OWNER = gql`
     protections(where: { owner: $owner, status: submitted }) {
       id
       status
-      taskHash
       taskType
       owner
       collateralToken
@@ -48,6 +47,7 @@ export const GET_ALL_SUBMITTED_PROTECTION_BY_OWNER = gql`
       updatedAtBlock
       updatedAtBlockHash
       executor
+      isPermanent
     }
   }
 `;
@@ -57,7 +57,6 @@ export const GET_ALL_EXECUTED_PROTECTION_BY_OWNER = gql`
     protections(where: { owner: $owner, status: executed }) {
       id
       status
-      taskHash
       taskType
       owner
       collateralToken
@@ -74,6 +73,7 @@ export const GET_ALL_EXECUTED_PROTECTION_BY_OWNER = gql`
       updatedAtBlock
       updatedAtBlockHash
       executor
+      isPermanent
     }
   }
 `;
