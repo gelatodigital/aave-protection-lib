@@ -14,7 +14,6 @@ export enum TaskType {
 export interface Protection {
   id: BytesLike;
   status: ProtectionStatus;
-  taskHash: BytesLike;
   taskType: TaskType;
   owner: string;
   collateralToken: string;
@@ -31,6 +30,7 @@ export interface Protection {
   updatedAtBlock: BigNumber;
   updatedAtBlockHash: BytesLike;
   executor: string;
+  isPermanent: boolean;
 }
 
 export interface Addresses {
