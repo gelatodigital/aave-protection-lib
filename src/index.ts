@@ -20,7 +20,6 @@ export const submitProtection = async (
 ): Promise<void> => {
   if (!isProtectionOK(colToken, debtToken, rateMode)) return;
   getAaveServices(provider).submitTask(
-    TaskType.Protection,
     addresses(provider.network.chainId).ProtectionAction,
     encodeProtection(
       colToken,
