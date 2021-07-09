@@ -6,8 +6,8 @@ export const GET_ALL_CANCELLED_PROTECTION_BY_USER = gql`
       id
       status
       user
-      protectionAction
-      submissionBlockNumber
+      action
+      subBlockNumber
       collateralToken
       debtToken
       rateMode
@@ -42,8 +42,8 @@ export const GET_ALL_SUBMITTED_PROTECTION_BY_USER = gql`
       id
       status
       user
-      protectionAction
-      submissionBlockNumber
+      action
+      subBlockNumber
       collateralToken
       debtToken
       rateMode
@@ -78,8 +78,8 @@ export const GET_ALL_EXECUTED_PROTECTION_BY_USER = gql`
       id
       status
       user
-      protectionAction
-      submissionBlockNumber
+      action
+      subBlockNumber
       collateralToken
       debtToken
       rateMode

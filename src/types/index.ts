@@ -11,8 +11,8 @@ export interface Protection {
   id: BytesLike;
   status: ProtectionStatus;
   user: string;
-  protectionAction: string;
-  submissionBlockNumber: BigNumber;
+  action: string;
+  subBlockNumber: BigNumber;
   collateralToken: string;
   debtToken: string;
   rateMode: BigNumber;
