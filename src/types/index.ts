@@ -7,15 +7,12 @@ export enum ProtectionStatus {
   Cancelled,
 }
 
-export enum TaskType {
-  Protection = 0,
-}
-
 export interface Protection {
   id: BytesLike;
   status: ProtectionStatus;
-  taskType: TaskType;
-  owner: string;
+  user: string;
+  protectionAction: string;
+  submissionBlockNumber: BigNumber;
   collateralToken: string;
   debtToken: string;
   rateMode: BigNumber;
@@ -30,6 +27,15 @@ export interface Protection {
   updatedAtBlock: BigNumber;
   updatedAtBlockHash: BytesLike;
   executor: string;
+  colTokenAmountBefore: BigNumber;
+  colTokenSwapAmount: BigNumber;
+  colTokenAmountAfter: BigNumber;
+  debtTokenAmountBefore: BigNumber;
+  debtTokenRepaidAmount: BigNumber;
+  debtTokenAmountAfter: BigNumber;
+  healthFactorBefore: BigNumber;
+  healthFactorAfter: BigNumber;
+  protectionFee: BigNumber;
   isPermanent: boolean;
 }
 

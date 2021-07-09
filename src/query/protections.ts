@@ -1,56 +1,52 @@
 import {
-  GET_ALL_CANCELLED_PROTECTION_BY_OWNER,
-  GET_ALL_SUBMITTED_PROTECTION_BY_OWNER,
-  GET_ALL_EXECUTED_PROTECTION_BY_OWNER,
+  GET_ALL_CANCELLED_PROTECTION_BY_USER,
+  GET_ALL_SUBMITTED_PROTECTION_BY_USER,
+  GET_ALL_EXECUTED_PROTECTION_BY_USER,
 } from "./graphql";
 import { request } from "graphql-request";
 import { subgraphUrl } from "../constants";
 import { Protection } from "../types";
 
-export const getSubmittedProtectionByOwner = async (
-  owner: string
+export const getSubmittedProtectionByUser = async (
+  user: string
 ): Promise<Protection[]> => {
   const data = await request(
     subgraphUrl,
-    GET_ALL_SUBMITTED_PROTECTION_BY_OWNER,
+    GET_ALL_SUBMITTED_PROTECTION_BY_USER,
     {
-      owner: owner.toLowerCase(),
+      GET_ALL_EXECUTED_PROTECTION_BY_USER: user.toLowerCase(),
     }
   );
-  if (!data) throw new Error("getSubmittedProtectionByOwner: NO DATA");
+  if (!data) throw new Error("getSubmittedProtectionByUser: NO DATA");
   if (!data.protections)
-    throw new Error("getSubmittedProtectionByOwner: NO PROTECTIONS FIELD");
+    throw new Error("getSubmittedProtectionByUser: NO PROTECTIONS FIELD");
   return data.protections;
 };
 
-export const getCancelledProtectionByOwner = async (
-  owner: string
+export const getCancelledProtectionByUser = async (
+  user: string
 ): Promise<Protection[]> => {
   const data = await request(
     subgraphUrl,
-    GET_ALL_CANCELLED_PROTECTION_BY_OWNER,
+    GET_ALL_CANCELLED_PROTECTION_BY_USER,
     {
-      owner: owner.toLowerCase(),
+      user: user.toLowerCase(),
     }
   );
-  if (!data) throw new Error("getCancelledProtectionByOwner: NO DATA");
+  if (!data) throw new Error("getCancelledProtectionByUser: NO DATA");
   if (!data.protections)
-    throw new Error("getCancelledProtectionByOwner: NO PROTECTIONS FIELD");
+    throw new Error("getCancelledProtectionByUser: NO PROTECTIONS FIELD");
   return data.protections;
 };
 
-export const getExecutedProtectionByOwner = async (
-  owner: string
+export const getExecutedProtectionByUser = async (
+  user: string
 ): Promise<Protection[]> => {
-  const data = await request(
-    subgraphUrl,
-    GET_ALL_EXECUTED_PROTECTION_BY_OWNER,
-    {
-      owner: owner.toLowerCase(),
-    }
-  );
-  if (!data) throw new Error("getExecutedProtectionByOwner: NO DATA");
+  const data = await request(subgraphUrl, GET_ALL_EXECUTED_PROTECTION_BY_USER, {
+    user: user.toLowerCase(),
+  });
+  if (!data) throw new Error("getExecutedProtectionByUser: NO DATA");
   if (!data.protections)
-    throw new Error("getExecutedProtectionByOwner: NO PROTECTIONS FIELD");
+    throw new Error("getExecutedProtectionByUser: NO PROTECTIONS FIELD");
   return data.protections;
 };

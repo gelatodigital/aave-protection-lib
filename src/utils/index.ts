@@ -18,7 +18,7 @@ export const encodeProtection = (
   rateMode: BigNumber,
   wantedHealthFactor: BigNumber,
   minimumHealthFactor: BigNumber,
-  owner: string
+  user: string
 ): string => {
   return new utils.AbiCoder().encode(
     ["address", "address", "uint256", "uint256", "uint256", "address"],
@@ -28,7 +28,7 @@ export const encodeProtection = (
       rateMode,
       wantedHealthFactor,
       minimumHealthFactor,
-      owner,
+      user,
     ]
   );
 };
