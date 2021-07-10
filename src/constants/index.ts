@@ -2,8 +2,8 @@ import { Addresses } from "../types";
 
 const maticAddresses: Addresses = {
   Gelato: "0x7598e84B2E114AB62CAB288CE5f7d5f6bad35BbA",
-  AaveServices: "0xcea4b531C089554F30aa5698BC288f33dA4d4D74",
-  ProtectionAction: "0x73172aEBC14828cC7C138c806e199275f1479820",
+  AaveServices: "0xBF10B9b604C7a0507155eAE1a6045CADA86b8Ed7",
+  ProtectionAction: "0xbB9BCCbE9Fe476677795528bDDdDe5A1110a0875",
   LendingPool: "0x8dFf5E27EA6b7AC08EbFdf9eB090F32ee9a30fcf",
 };
 

@@ -2,11 +2,11 @@ import { BigNumber, ethers } from "ethers";
 import { addresses } from "./constants";
 import { getAaveServices } from "./instances/contracts";
 import {
-  getSubmittedProtectionByOwner,
-  getCancelledProtectionByOwner,
-  getExecutedProtectionByOwner,
+  getSubmittedProtectionByUser,
+  getCancelledProtectionByUser,
+  getExecutedProtectionByUser,
 } from "./query/protections";
-import { Protection, TaskType } from "./types";
+import { Protection } from "./types";
 import { isProtectionOK, encodeProtection } from "./utils";
 
 export const submitProtection = async (
@@ -20,7 +20,6 @@ export const submitProtection = async (
 ): Promise<void> => {
   if (!isProtectionOK(colToken, debtToken, rateMode)) return;
   getAaveServices(provider).submitTask(
-    TaskType.Protection,
     addresses(provider.network.chainId).ProtectionAction,
     encodeProtection(
       colToken,
@@ -35,15 +34,15 @@ export const submitProtection = async (
 };
 
 export const cancelProtection = async (
-  provider: ethers.providers.Web3Provider,
-  taskType: BigNumber
+  provider: ethers.providers.Web3Provider
 ): Promise<void> => {
-  getAaveServices(provider).cancelTask(taskType);
+  getAaveServices(provider).cancelTask(
+    addresses(provider.network.chainId).ProtectionAction
+  );
 };
 
 export const updateProtection = async (
   provider: ethers.providers.Web3Provider,
-  taskType: BigNumber,
   colToken: string,
   debtToken: string,
   rateMode: BigNumber,
@@ -55,7 +54,6 @@ export const updateProtection = async (
   const aaveServices = getAaveServices(provider);
   const user = await provider.getSigner().getAddress();
   aaveServices.updateTask(
-    taskType,
     addresses(provider.network.chainId).ProtectionAction,
     encodeProtection(
       colToken,
@@ -70,19 +68,19 @@ export const updateProtection = async (
 };
 
 export const getSubmittedProtection = async (
-  owner: string
+  user: string
 ): Promise<Protection[]> => {
-  return getSubmittedProtectionByOwner(owner);
+  return getSubmittedProtectionByUser(user);
 };
 
 export const getCancelledProtection = async (
-  owner: string
+  user: string
 ): Promise<Protection[]> => {
-  return getCancelledProtectionByOwner(owner);
+  return getCancelledProtectionByUser(user);
 };
 
 export const getExecutedProtection = async (
-  owner: string
+  user: string
 ): Promise<Protection[]> => {
-  return getExecutedProtectionByOwner(owner);
+  return getExecutedProtectionByUser(user);
 };

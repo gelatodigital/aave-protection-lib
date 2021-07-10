@@ -47,7 +47,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "owner",
+        "name": "user",
         "type": "address"
       }
     ],
@@ -64,16 +64,22 @@
         "type": "bytes32"
       },
       {
-        "indexed": false,
-        "internalType": "enum TaskType",
-        "name": "taskType",
-        "type": "uint8"
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "owner",
+        "name": "action",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "subBlockNumber",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -92,6 +98,25 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
     "inputs": [],
     "name": "GELATO",
     "outputs": [
@@ -105,11 +130,43 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "actions",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "actions_",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
-        "internalType": "enum TaskType",
-        "name": "_taskType",
-        "type": "uint8"
+        "internalType": "address",
+        "name": "_action",
+        "type": "address"
+      }
+    ],
+    "name": "addAction",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_action",
+        "type": "address"
       }
     ],
     "name": "cancelTask",
@@ -120,34 +177,41 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_user",
-        "type": "address"
-      },
-      {
-        "internalType": "enum TaskType",
-        "name": "_taskType",
-        "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "_aaveAction",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes",
-        "name": "_data",
-        "type": "bytes"
-      },
-      {
-        "internalType": "bytes",
-        "name": "_offChainData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "bool",
-        "name": "_isPermanent",
-        "type": "bool"
+        "components": [
+          {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "action",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subBlockNumber",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "offChainData",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "isPermanent",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct ExecutionData",
+        "name": "_execData",
+        "type": "tuple"
       }
     ],
     "name": "exec",
@@ -163,9 +227,9 @@
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "_aaveAction",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_subBlockNumber",
+        "type": "uint256"
       },
       {
         "internalType": "bytes",
@@ -193,6 +257,25 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_action",
+        "type": "address"
+      }
+    ],
+    "name": "isActionWhitelisted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_user",
         "type": "address"
       },
@@ -202,9 +285,9 @@
         "type": "bytes32"
       },
       {
-        "internalType": "enum TaskType",
-        "name": "_taskType",
-        "type": "uint8"
+        "internalType": "address",
+        "name": "_action",
+        "type": "address"
       }
     ],
     "name": "isTaskSubmitted",
@@ -231,9 +314,9 @@
         "type": "bytes32"
       },
       {
-        "internalType": "enum TaskType",
-        "name": "_taskType",
-        "type": "uint8"
+        "internalType": "address",
+        "name": "_action",
+        "type": "address"
       }
     ],
     "name": "isUserTask",
@@ -248,15 +331,62 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "numberOfActions",
+    "outputs": [
       {
-        "internalType": "enum TaskType",
-        "name": "_taskType",
-        "type": "uint8"
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
       {
         "internalType": "address",
-        "name": "_aaveAction",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_action",
+        "type": "address"
+      }
+    ],
+    "name": "removeAction",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_action",
         "type": "address"
       },
       {
@@ -283,12 +413,12 @@
         "type": "address"
       },
       {
-        "internalType": "enum TaskType",
+        "internalType": "address",
         "name": "",
-        "type": "uint8"
+        "type": "address"
       }
     ],
-    "name": "taskByUser",
+    "name": "taskByUsersAction",
     "outputs": [
       {
         "internalType": "bytes32",
@@ -302,13 +432,21 @@
   {
     "inputs": [
       {
-        "internalType": "enum TaskType",
-        "name": "_taskType",
-        "type": "uint8"
-      },
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "internalType": "address",
-        "name": "_aaveAction",
+        "name": "_action",
         "type": "address"
       },
       {

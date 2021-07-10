@@ -1,12 +1,13 @@
 import { gql } from "graphql-request";
 
-export const GET_ALL_CANCELLED_PROTECTION_BY_OWNER = gql`
-  query getCancelledProtectionByOwner($owner: String) {
-    protections(where: { owner: $owner, status: cancelled }) {
+export const GET_ALL_CANCELLED_PROTECTION_BY_USER = gql`
+  query getCancelledProtectionByUser($user: String) {
+    protections(where: { user: $user, status: cancelled }) {
       id
       status
-      taskType
-      owner
+      user
+      action
+      subBlockNumber
       collateralToken
       debtToken
       rateMode
@@ -21,18 +22,28 @@ export const GET_ALL_CANCELLED_PROTECTION_BY_OWNER = gql`
       updatedAtBlock
       updatedAtBlockHash
       executor
+      colTokenAmountBefore
+      colTokenSwapAmount
+      colTokenAmountAfter
+      debtTokenAmountBefore
+      debtTokenRepaidAmount
+      debtTokenAmountAfter
+      healthFactorBefore
+      healthFactorAfter
+      protectionFee
       isPermanent
     }
   }
 `;
 
-export const GET_ALL_SUBMITTED_PROTECTION_BY_OWNER = gql`
-  query getSubmittedProtectionByOwner($owner: String) {
-    protections(where: { owner: $owner, status: submitted }) {
+export const GET_ALL_SUBMITTED_PROTECTION_BY_USER = gql`
+  query getSubmittedProtectionByUser($user: String) {
+    protections(where: { user: $user, status: submitted }) {
       id
       status
-      taskType
-      owner
+      user
+      action
+      subBlockNumber
       collateralToken
       debtToken
       rateMode
@@ -47,18 +58,28 @@ export const GET_ALL_SUBMITTED_PROTECTION_BY_OWNER = gql`
       updatedAtBlock
       updatedAtBlockHash
       executor
+      colTokenAmountBefore
+      colTokenSwapAmount
+      colTokenAmountAfter
+      debtTokenAmountBefore
+      debtTokenRepaidAmount
+      debtTokenAmountAfter
+      healthFactorBefore
+      healthFactorAfter
+      protectionFee
       isPermanent
     }
   }
 `;
 
-export const GET_ALL_EXECUTED_PROTECTION_BY_OWNER = gql`
-  query getExecutedProtectionByOwner($owner: String) {
-    protections(where: { owner: $owner, status: executed }) {
+export const GET_ALL_EXECUTED_PROTECTION_BY_USER = gql`
+  query getExecutedProtectionByUser($user: String) {
+    protections(where: { user: $user, status: executed }) {
       id
       status
-      taskType
-      owner
+      user
+      action
+      subBlockNumber
       collateralToken
       debtToken
       rateMode
@@ -73,6 +94,15 @@ export const GET_ALL_EXECUTED_PROTECTION_BY_OWNER = gql`
       updatedAtBlock
       updatedAtBlockHash
       executor
+      colTokenAmountBefore
+      colTokenSwapAmount
+      colTokenAmountAfter
+      debtTokenAmountBefore
+      debtTokenRepaidAmount
+      debtTokenAmountAfter
+      healthFactorBefore
+      healthFactorAfter
+      protectionFee
       isPermanent
     }
   }
