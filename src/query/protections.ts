@@ -14,7 +14,7 @@ export const getSubmittedProtectionByUser = async (
     subgraphUrl,
     GET_ALL_SUBMITTED_PROTECTION_BY_USER,
     {
-      GET_ALL_EXECUTED_PROTECTION_BY_USER: user.toLowerCase(),
+      user: user.toLowerCase(),
     }
   );
   if (!data) throw new Error("getSubmittedProtectionByUser: NO DATA");
