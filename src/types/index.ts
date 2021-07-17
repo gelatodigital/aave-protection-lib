@@ -36,6 +36,7 @@ export interface Protection {
   healthFactorBefore: BigNumber;
   healthFactorAfter: BigNumber;
   protectionFee: BigNumber;
+  flashloanFee: BigNumber;
   isPermanent: boolean;
 }
 
