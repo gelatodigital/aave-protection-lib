@@ -1,4 +1,4 @@
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, ContractTransaction, ethers } from "ethers";
 import { addresses } from "./constants";
 import { getAaveServices } from "./instances/contracts";
 import {
@@ -17,9 +17,9 @@ export const submitProtection = async (
   wantedHealthFactor: BigNumber,
   minimumHealthFactor: BigNumber,
   isPermanent: boolean
-): Promise<void> => {
-  if (!isProtectionOK(colToken, debtToken, rateMode)) return;
-  getAaveServices(provider).submitTask(
+): Promise<ContractTransaction> => {
+  if (!isProtectionOK(colToken, debtToken, rateMode)) return Promise.reject();
+  return getAaveServices(provider).submitTask(
     addresses(provider.network.chainId).ProtectionAction,
     encodeProtection(
       colToken,
@@ -35,8 +35,8 @@ export const submitProtection = async (
 
 export const cancelProtection = async (
   provider: ethers.providers.Web3Provider
-): Promise<void> => {
-  getAaveServices(provider).cancelTask(
+): Promise<ContractTransaction> => {
+  return getAaveServices(provider).cancelTask(
     addresses(provider.network.chainId).ProtectionAction
   );
 };
@@ -49,11 +49,11 @@ export const updateProtection = async (
   wantedHealthFactor: BigNumber,
   minimumHealthFactor: BigNumber,
   isPermanent: boolean
-): Promise<void> => {
-  if (!isProtectionOK(colToken, debtToken, rateMode)) return;
+): Promise<ContractTransaction> => {
+  if (!isProtectionOK(colToken, debtToken, rateMode)) return Promise.reject();
   const aaveServices = getAaveServices(provider);
   const user = await provider.getSigner().getAddress();
-  aaveServices.updateTask(
+  return aaveServices.updateTask(
     addresses(provider.network.chainId).ProtectionAction,
     encodeProtection(
       colToken,
