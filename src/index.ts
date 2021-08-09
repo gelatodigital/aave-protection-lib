@@ -67,6 +67,14 @@ export const updateProtection = async (
   );
 };
 
+export const isProtectionDeprecated = async (
+  user: string
+): Promise<boolean | null> => {
+  const submittedTasks = await getSubmittedProtection(user);
+  if (submittedTasks.length === 0) return null;
+  return submittedTasks[0].action === addresses(137).OldProtectionAction;
+};
+
 export const getSubmittedProtection = async (
   user: string
 ): Promise<Protection[]> => {
