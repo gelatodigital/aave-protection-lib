@@ -2,9 +2,9 @@ import { BigNumber, ContractTransaction, ethers } from "ethers";
 import { addresses } from "./constants";
 import { getAaveServices } from "./instances/contracts";
 import {
-  getSubmittedProtectionByUser,
+  getSubmittedProtectionByUserAndAction,
   getCancelledProtectionByUser,
-  getExecutedProtectionByUser,
+  getExecutedProtectionByUserAndAction,
 } from "./query/protections";
 import { Protection } from "./types";
 import { isProtectionOK, encodeProtection } from "./utils";
@@ -72,13 +72,19 @@ export const isProtectionDeprecated = async (
 ): Promise<boolean | null> => {
   const submittedTasks = await getSubmittedProtection(user);
   if (submittedTasks.length === 0) return null;
-  return submittedTasks[0].action === addresses(137).OldProtectionAction;
+  return (
+    submittedTasks[0].action ===
+    addresses(137).OldProtectionAction.toLowerCase()
+  );
 };
 
 export const getSubmittedProtection = async (
   user: string
 ): Promise<Protection[]> => {
-  return getSubmittedProtectionByUser(user);
+  return getSubmittedProtectionByUserAndAction(
+    user,
+    addresses(137).ProtectionAction
+  );
 };
 
 export const getCancelledProtection = async (
@@ -90,5 +96,26 @@ export const getCancelledProtection = async (
 export const getExecutedProtection = async (
   user: string
 ): Promise<Protection[]> => {
-  return getExecutedProtectionByUser(user);
+  return getExecutedProtectionByUserAndAction(
+    user,
+    addresses(137).ProtectionAction
+  );
+};
+
+export const getSubmittedOldProtection = async (
+  user: string
+): Promise<Protection[]> => {
+  return getSubmittedProtectionByUserAndAction(
+    user,
+    addresses(137).OldProtectionAction
+  );
+};
+
+export const getExecutedOldProtection = async (
+  user: string
+): Promise<Protection[]> => {
+  return getExecutedProtectionByUserAndAction(
+    user,
+    addresses(137).OldProtectionAction
+  );
 };

@@ -37,9 +37,9 @@ export const GET_ALL_CANCELLED_PROTECTION_BY_USER = gql`
   }
 `;
 
-export const GET_ALL_SUBMITTED_PROTECTION_BY_USER = gql`
-  query getSubmittedProtectionByUser($user: String) {
-    protections(where: { user: $user, status: submitted }) {
+export const GET_ALL_SUBMITTED_PROTECTION_BY_USER_AND_ACTION = gql`
+  query getSubmittedProtectionByUserAndAction($user: String, $action: String) {
+    protections(where: { user: $user, status: submitted, action: $action }) {
       id
       status
       user
@@ -74,9 +74,9 @@ export const GET_ALL_SUBMITTED_PROTECTION_BY_USER = gql`
   }
 `;
 
-export const GET_ALL_EXECUTED_PROTECTION_BY_USER = gql`
-  query getExecutedProtectionByUser($user: String) {
-    protections(where: { user: $user, status: executed }) {
+export const GET_ALL_EXECUTED_PROTECTION_BY_USER_AND_ACTION = gql`
+  query getExecutedProtectionByUserAndAction($user: String, $action: String) {
+    protections(where: { user: $user, status: executed, action: $action }) {
       id
       status
       user
