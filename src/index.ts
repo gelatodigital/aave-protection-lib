@@ -3,7 +3,7 @@ import { addresses } from "./constants";
 import { getAaveServices } from "./instances/contracts";
 import {
   getSubmittedProtectionByUserAndAction,
-  getCancelledProtectionByUser,
+  getCancelledProtectionByUserAndAction,
   getExecutedProtectionByUserAndAction,
 } from "./query/protections";
 import { Protection } from "./types";
@@ -77,28 +77,33 @@ export const updateProtection = async (
 
 export const isProtectionDeprecated = async (
   user: string
-): Promise<boolean | null> => {
-  const submittedTasks = await getSubmittedProtection(user);
-  if (submittedTasks.length === 0) return null;
+): Promise<boolean> => {
   return (
-    submittedTasks[0].action ===
-    addresses(137).OldProtectionAction.toLowerCase()
+    (await getSubmittedOldProtection(user)) !== undefined &&
+    (await getSubmittedProtection(user)) === undefined &&
+    (await getCancelledProtection(user)).length === 0 &&
+    (await getExecutedProtection(user)).length === 0
   );
 };
 
 export const getSubmittedProtection = async (
   user: string
-): Promise<Protection[]> => {
-  return getSubmittedProtectionByUserAndAction(
-    user,
-    addresses(137).ProtectionAction
-  );
+): Promise<Protection> => {
+  return (
+    await getSubmittedProtectionByUserAndAction(
+      user,
+      addresses(137).ProtectionAction
+    )
+  )[0];
 };
 
 export const getCancelledProtection = async (
   user: string
 ): Promise<Protection[]> => {
-  return getCancelledProtectionByUser(user);
+  return getCancelledProtectionByUserAndAction(
+    user,
+    addresses(137).ProtectionAction
+  );
 };
 
 export const getExecutedProtection = async (
@@ -112,8 +117,19 @@ export const getExecutedProtection = async (
 
 export const getSubmittedOldProtection = async (
   user: string
+): Promise<Protection> => {
+  return (
+    await getSubmittedProtectionByUserAndAction(
+      user,
+      addresses(137).OldProtectionAction
+    )
+  )[0];
+};
+
+export const getCancelledOldProtection = async (
+  user: string
 ): Promise<Protection[]> => {
-  return getSubmittedProtectionByUserAndAction(
+  return getCancelledProtectionByUserAndAction(
     user,
     addresses(137).OldProtectionAction
   );

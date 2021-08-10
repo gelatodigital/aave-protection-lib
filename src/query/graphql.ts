@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 
-export const GET_ALL_CANCELLED_PROTECTION_BY_USER = gql`
-  query getCancelledProtectionByUser($user: String) {
-    protections(where: { user: $user, status: cancelled }) {
+export const GET_ALL_CANCELLED_PROTECTION_BY_USER_AND_ACTION = gql`
+  query getCancelledProtectionByUserAndAction($user: String, $action: String) {
+    protections(where: { user: $user, status: cancelled, action: $action }) {
       id
       status
       user
