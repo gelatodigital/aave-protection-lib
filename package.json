@@ -8,8 +8,7 @@
     "dist/src/**/*"
   ],
   "scripts": {
-    "publishing": "rm -rf ./dist && yarn build && yarn publish",
-    "build": "yarn generate-contracts-typings && tsc && yarn copy-contracts-types",
+    "build": "rm -rf ./dist && yarn generate-contracts-typings && tsc && yarn copy-contracts-types",
     "copy-contracts-types": "cp ./src/contracts/types/*.d.ts ./dist/src/contracts/types",
     "format": "prettier --write .",
     "generate-contracts-typings": "typechain --target=ethers-v5 --out-dir src/contracts/types './src/**/abis/*.json'",
