@@ -41,6 +41,14 @@ export const cancelProtection = async (
   );
 };
 
+export const cancelOldProtection = async (
+  provider: ethers.providers.Web3Provider
+): Promise<ContractTransaction> => {
+  return getAaveServices(provider).cancelTask(
+    addresses(provider.network.chainId).OldProtectionAction
+  );
+};
+
 export const updateProtection = async (
   provider: ethers.providers.Web3Provider,
   colToken: string,
