@@ -86,6 +86,15 @@ export const isProtectionDeprecated = async (
   );
 };
 
+export const userHasDeprecatedProtection = async (
+  user: string
+): Promise<boolean> => {
+  return (
+    (await getSubmittedOldProtection(user)) !== undefined &&
+    (await getSubmittedProtection(user)) !== undefined
+  );
+};
+
 export const getSubmittedProtection = async (
   user: string
 ): Promise<Protection> => {
