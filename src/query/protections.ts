@@ -10,7 +10,7 @@ import { Protection } from "../types";
 export const getSubmittedProtectionByUserAndAction = async (
   user: string,
   action: string
-): Promise<Protection[]> => {
+): Promise<Protection | undefined> => {
   const data = await request(
     subgraphUrl,
     GET_ALL_SUBMITTED_PROTECTION_BY_USER_AND_ACTION,
@@ -24,7 +24,7 @@ export const getSubmittedProtectionByUserAndAction = async (
     throw new Error(
       "getSubmittedProtectionByUserAndAction: NO PROTECTIONS FIELD"
     );
-  return data.protections;
+  return data.protections[0];
 };
 
 export const getCancelledProtectionByUserAndAction = async (

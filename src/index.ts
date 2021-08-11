@@ -86,24 +86,39 @@ export const isProtectionDeprecated = async (
   );
 };
 
-export const userHasDeprecatedProtection = async (
+export const hasUserUpgraded = async (user: string): Promise<boolean> => {
+  return (
+    (await getSubmittedProtection(user)) !== undefined ||
+    (await getCancelledProtection(user)).length > 0 ||
+    (await getExecutedProtection(user)).length > 0
+  );
+};
+
+export const upgradedUserStillHasDeprecatedProtection = async (
   user: string
 ): Promise<boolean> => {
   return (
-    (await getSubmittedOldProtection(user)) !== undefined &&
-    (await getSubmittedProtection(user)) !== undefined
+    (await hasUserUpgraded(user)) &&
+    (await getSubmittedOldProtection(user)) !== undefined
   );
 };
 
 export const getSubmittedProtection = async (
   user: string
-): Promise<Protection> => {
-  return (
-    await getSubmittedProtectionByUserAndAction(
-      user,
-      addresses(137).ProtectionAction
-    )
-  )[0];
+): Promise<Protection | undefined> => {
+  return await getSubmittedProtectionByUserAndAction(
+    user,
+    addresses(137).ProtectionAction
+  );
+};
+
+export const getSubmittedOldProtection = async (
+  user: string
+): Promise<Protection | undefined> => {
+  return getSubmittedProtectionByUserAndAction(
+    user,
+    addresses(137).OldProtectionAction
+  );
 };
 
 export const getCancelledProtection = async (
@@ -115,32 +130,21 @@ export const getCancelledProtection = async (
   );
 };
 
-export const getExecutedProtection = async (
-  user: string
-): Promise<Protection[]> => {
-  return getExecutedProtectionByUserAndAction(
-    user,
-    addresses(137).ProtectionAction
-  );
-};
-
-export const getSubmittedOldProtection = async (
-  user: string
-): Promise<Protection> => {
-  return (
-    await getSubmittedProtectionByUserAndAction(
-      user,
-      addresses(137).OldProtectionAction
-    )
-  )[0];
-};
-
 export const getCancelledOldProtection = async (
   user: string
 ): Promise<Protection[]> => {
   return getCancelledProtectionByUserAndAction(
     user,
     addresses(137).OldProtectionAction
+  );
+};
+
+export const getExecutedProtection = async (
+  user: string
+): Promise<Protection[]> => {
+  return getExecutedProtectionByUserAndAction(
+    user,
+    addresses(137).ProtectionAction
   );
 };
 
