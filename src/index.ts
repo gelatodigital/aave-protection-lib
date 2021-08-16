@@ -76,83 +76,97 @@ export const updateProtection = async (
 };
 
 export const isProtectionDeprecated = async (
-  user: string
+  provider: ethers.providers.Web3Provider
 ): Promise<boolean> => {
   return (
-    (await getSubmittedOldProtection(user)) !== undefined &&
-    (await getSubmittedProtection(user)) === undefined &&
-    (await getCancelledProtection(user)).length === 0 &&
-    (await getExecutedProtection(user)).length === 0
+    (await getSubmittedOldProtection(provider)) !== undefined &&
+    (await getSubmittedProtection(provider)) === undefined &&
+    (await getCancelledProtection(provider)).length === 0 &&
+    (await getExecutedProtection(provider)).length === 0
   );
 };
 
-export const hasUserUpgraded = async (user: string): Promise<boolean> => {
+export const hasUserUpgraded = async (
+  provider: ethers.providers.Web3Provider
+): Promise<boolean> => {
   return (
-    (await getSubmittedProtection(user)) !== undefined ||
-    (await getCancelledProtection(user)).length > 0 ||
-    (await getExecutedProtection(user)).length > 0
+    (await getSubmittedProtection(provider)) !== undefined ||
+    (await getCancelledProtection(provider)).length > 0 ||
+    (await getExecutedProtection(provider)).length > 0
   );
 };
 
 export const upgradedUserStillHasDeprecatedProtection = async (
-  user: string
+  provider: ethers.providers.Web3Provider
 ): Promise<boolean> => {
   return (
-    (await hasUserUpgraded(user)) &&
-    (await getSubmittedOldProtection(user)) !== undefined
+    (await hasUserUpgraded(provider)) &&
+    (await getSubmittedOldProtection(provider)) !== undefined
   );
 };
 
 export const getSubmittedProtection = async (
-  user: string
+  provider: ethers.providers.Web3Provider
 ): Promise<Protection | undefined> => {
+  const chainId = (await provider.getNetwork()).chainId;
   return await getSubmittedProtectionByUserAndAction(
-    user,
-    addresses(137).ProtectionAction
+    chainId,
+    await provider.getSigner().getAddress(),
+    addresses(chainId).ProtectionAction
   );
 };
 
 export const getSubmittedOldProtection = async (
-  user: string
+  provider: ethers.providers.Web3Provider
 ): Promise<Protection | undefined> => {
+  const chainId = (await provider.getNetwork()).chainId;
   return getSubmittedProtectionByUserAndAction(
-    user,
-    addresses(137).OldProtectionAction
+    chainId,
+    await provider.getSigner().getAddress(),
+    addresses(chainId).OldProtectionAction
   );
 };
 
 export const getCancelledProtection = async (
-  user: string
+  provider: ethers.providers.Web3Provider
 ): Promise<Protection[]> => {
+  const chainId = (await provider.getNetwork()).chainId;
   return getCancelledProtectionByUserAndAction(
-    user,
-    addresses(137).ProtectionAction
+    chainId,
+    await provider.getSigner().getAddress(),
+    addresses(chainId).ProtectionAction
   );
 };
 
 export const getCancelledOldProtection = async (
-  user: string
+  provider: ethers.providers.Web3Provider
 ): Promise<Protection[]> => {
+  const chainId = (await provider.getNetwork()).chainId;
   return getCancelledProtectionByUserAndAction(
-    user,
-    addresses(137).OldProtectionAction
+    chainId,
+    await provider.getSigner().getAddress(),
+    addresses(chainId).OldProtectionAction
   );
 };
 
 export const getExecutedProtection = async (
-  user: string
+  provider: ethers.providers.Web3Provider
 ): Promise<Protection[]> => {
+  const chainId = (await provider.getNetwork()).chainId;
   return getExecutedProtectionByUserAndAction(
-    user,
-    addresses(137).ProtectionAction
+    chainId,
+    await provider.getSigner().getAddress(),
+    addresses(chainId).ProtectionAction
   );
 };
 
 export const getExecutedOldProtection = async (
-  user: string
+  provider: ethers.providers.Web3Provider
 ): Promise<Protection[]> => {
+  const chainId = (await provider.getNetwork()).chainId;
   return getExecutedProtectionByUserAndAction(
-    user,
-    addresses(137).OldProtectionAction
+    chainId,
+    await provider.getSigner().getAddress(),
+    addresses(chainId).OldProtectionAction
   );
 };
