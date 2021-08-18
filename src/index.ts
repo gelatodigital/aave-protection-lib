@@ -77,7 +77,8 @@ export const updateProtection = async (
 
 export const isProtectionDeprecated = async (
   provider: ethers.providers.Web3Provider
-): Promise<boolean> => {
+): Promise<boolean | undefined> => {
+  if (provider.network.chainId !== 137) return undefined;
   return (
     (await getSubmittedOldProtection(provider)) !== undefined &&
     (await getSubmittedProtection(provider)) === undefined &&
@@ -88,7 +89,8 @@ export const isProtectionDeprecated = async (
 
 export const hasUserUpgraded = async (
   provider: ethers.providers.Web3Provider
-): Promise<boolean> => {
+): Promise<boolean | undefined> => {
+  if (provider.network.chainId !== 137) return undefined;
   return (
     (await getSubmittedProtection(provider)) !== undefined ||
     (await getCancelledProtection(provider)).length > 0 ||
@@ -98,7 +100,8 @@ export const hasUserUpgraded = async (
 
 export const upgradedUserStillHasDeprecatedProtection = async (
   provider: ethers.providers.Web3Provider
-): Promise<boolean> => {
+): Promise<boolean | undefined> => {
+  if (provider.network.chainId !== 137) return undefined;
   return (
     (await hasUserUpgraded(provider)) &&
     (await getSubmittedOldProtection(provider)) !== undefined
@@ -118,10 +121,11 @@ export const getSubmittedProtection = async (
 export const getSubmittedOldProtection = async (
   provider: ethers.providers.Web3Provider
 ): Promise<Protection | undefined> => {
+  if (provider.network.chainId !== 137) return undefined;
   return getSubmittedProtectionByUserAndAction(
-    provider.network.chainId,
+    137,
     await provider.getSigner().getAddress(),
-    addresses(provider.network.chainId).OldProtectionAction
+    addresses(137).OldProtectionAction
   );
 };
 
@@ -137,11 +141,12 @@ export const getCancelledProtection = async (
 
 export const getCancelledOldProtection = async (
   provider: ethers.providers.Web3Provider
-): Promise<Protection[]> => {
+): Promise<Protection[] | undefined> => {
+  if (provider.network.chainId !== 137) return undefined;
   return getCancelledProtectionByUserAndAction(
-    provider.network.chainId,
+    137,
     await provider.getSigner().getAddress(),
-    addresses(provider.network.chainId).OldProtectionAction
+    addresses(137).OldProtectionAction
   );
 };
 
@@ -157,10 +162,11 @@ export const getExecutedProtection = async (
 
 export const getExecutedOldProtection = async (
   provider: ethers.providers.Web3Provider
-): Promise<Protection[]> => {
+): Promise<Protection[] | undefined> => {
+  if (provider.network.chainId !== 137) return undefined;
   return getExecutedProtectionByUserAndAction(
-    provider.network.chainId,
+    137,
     await provider.getSigner().getAddress(),
-    addresses(provider.network.chainId).OldProtectionAction
+    addresses(137).OldProtectionAction
   );
 };
