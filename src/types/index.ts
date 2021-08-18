@@ -44,6 +44,6 @@ export interface Addresses {
   Gelato: string;
   AaveServices: string;
   ProtectionAction: string;
-  OldProtectionAction: string;
+  OldProtectionAction?: string;
   LendingPool: string;
 }

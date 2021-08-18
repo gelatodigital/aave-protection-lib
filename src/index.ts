@@ -43,9 +43,10 @@ export const cancelProtection = async (
 
 export const cancelOldProtection = async (
   provider: ethers.providers.Web3Provider
-): Promise<ContractTransaction> => {
+): Promise<ContractTransaction | undefined> => {
+  if (provider.network.chainId !== 137) return undefined;
   return getAaveServices(provider).cancelTask(
-    addresses(provider.network.chainId).OldProtectionAction
+    addresses(137).OldProtectionAction as string
   );
 };
 
@@ -125,7 +126,7 @@ export const getSubmittedOldProtection = async (
   return getSubmittedProtectionByUserAndAction(
     137,
     await provider.getSigner().getAddress(),
-    addresses(137).OldProtectionAction
+    addresses(137).OldProtectionAction as string
   );
 };
 
@@ -146,7 +147,7 @@ export const getCancelledOldProtection = async (
   return getCancelledProtectionByUserAndAction(
     137,
     await provider.getSigner().getAddress(),
-    addresses(137).OldProtectionAction
+    addresses(137).OldProtectionAction as string
   );
 };
 
@@ -167,6 +168,6 @@ export const getExecutedOldProtection = async (
   return getExecutedProtectionByUserAndAction(
     137,
     await provider.getSigner().getAddress(),
-    addresses(137).OldProtectionAction
+    addresses(137).OldProtectionAction as string
   );
 };

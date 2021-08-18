@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { Addresses } from "../types";
 
 const maticAddresses: Addresses = {
@@ -13,7 +12,6 @@ const mainnetAddresses: Addresses = {
   Gelato: "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
   AaveServices: "0xE3d373c78803C1d22cE96bdC43d47542835bBF42",
   ProtectionAction: "0x83c403eCC6393036d8e4e059fF18FabBc7C68c8F",
-  OldProtectionAction: ethers.constants.AddressZero,
   LendingPool: "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9",
 };
 
