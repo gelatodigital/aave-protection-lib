@@ -4,15 +4,16 @@ import {
   GET_ALL_EXECUTED_PROTECTION_BY_USER_AND_ACTION,
 } from "./graphql";
 import { request } from "graphql-request";
-import { subgraphUrl } from "../constants";
+import { getSubgraphUrl } from "../constants";
 import { Protection } from "../types";
 
 export const getSubmittedProtectionByUserAndAction = async (
+  chainId: number,
   user: string,
   action: string
 ): Promise<Protection | undefined> => {
   const data = await request(
-    subgraphUrl,
+    getSubgraphUrl(chainId),
     GET_ALL_SUBMITTED_PROTECTION_BY_USER_AND_ACTION,
     {
       user: user.toLowerCase(),
@@ -28,11 +29,12 @@ export const getSubmittedProtectionByUserAndAction = async (
 };
 
 export const getCancelledProtectionByUserAndAction = async (
+  chainId: number,
   user: string,
   action: string
 ): Promise<Protection[]> => {
   const data = await request(
-    subgraphUrl,
+    getSubgraphUrl(chainId),
     GET_ALL_CANCELLED_PROTECTION_BY_USER_AND_ACTION,
     {
       user: user.toLowerCase(),
@@ -48,11 +50,12 @@ export const getCancelledProtectionByUserAndAction = async (
 };
 
 export const getExecutedProtectionByUserAndAction = async (
+  chainId: number,
   user: string,
   action: string
 ): Promise<Protection[]> => {
   const data = await request(
-    subgraphUrl,
+    getSubgraphUrl(chainId),
     GET_ALL_EXECUTED_PROTECTION_BY_USER_AND_ACTION,
     {
       user: user.toLowerCase(),
